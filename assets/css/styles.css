@@ -555,3 +555,8 @@ textarea{ min-height: 120px; resize: vertical; }
 @media (prefers-reduced-motion: reduce){
   .reveal{ opacity:1; transform:none; }
 }
+
+/* --- PrefabHomesCanada: helpers for your HTML grid spans --- */
+.grid-span-6{ grid-column: span 6; }
+.grid-span-12{ grid-column: span 12; }
+
