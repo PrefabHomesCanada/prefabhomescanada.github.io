@@ -492,3 +492,9 @@ textarea{ min-height: 120px; resize: vertical; }
   background: rgba(255,255,255,.03);
   color: rgba(238,242,255,.9);
 }
+
+.reveal{ opacity:0; transform: translateY(10px); transition: opacity .5s var(--ease), transform .5s var(--ease); }
+.reveal.is-in{ opacity:1; transform:none; }
+@media (prefers-reduced-motion: reduce){
+  .reveal{ opacity:1; transform:none; transition:none; }
+}
