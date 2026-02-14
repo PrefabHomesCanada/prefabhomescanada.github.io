@@ -501,65 +501,6 @@ textarea{ min-height: 120px; resize: vertical; }
   .footer-grid{ grid-template-columns:1fr; }
 }
 
-/* ---------- 11) Tables (optional) ---------- */
-.table{
-  width:100%;
-  border-collapse:separate;
-  border-spacing:0;
-  overflow:hidden;
-  border-radius: var(--r20);
-  border:1px solid var(--line);
-  background: rgba(255,255,255,.02);
-}
-.table th, .table td{
-  padding:12px 12px;
-  border-bottom:1px solid var(--line);
-  text-align:left;
-}
-.table th{
-  background: rgba(255,255,255,.04);
-  color: rgba(238,242,255,.92);
-  font-weight:900;
-}
-.table tr:last-child td{ border-bottom:none; }
-
-/* ---------- 12) Small polish ---------- */
-.hr-glow{
-  height:1px;
-  background: linear-gradient(90deg, transparent, rgba(213,43,30,.65), rgba(26,116,255,.65), transparent);
-  opacity:.55;
-}
-
-.glow-border{
-  border:1px solid transparent;
-  background:
-    linear-gradient(var(--card), var(--card)) padding-box,
-    var(--grad-brand) border-box;
-  border-radius: var(--r20);
-}
-
-.note{
-  padding: 12px 14px;
-  border-radius: 16px;
-  border:1px solid var(--line);
-  background: rgba(255,255,255,.03);
-  color: rgba(238,242,255,.9);
-}
-
-.reveal{
-  opacity:0;
-  transform: translateY(10px);
-  transition: opacity .5s var(--ease), transform .5s var(--ease);
-}
-.reveal.is-in{ opacity:1; transform:none; }
-@media (prefers-reduced-motion: reduce){
-  .reveal{ opacity:1; transform:none; }
-}
-
-/* --- PrefabHomesCanada: helpers for your HTML grid spans --- */
-.grid-span-6{ grid-column: span 6; }
-.grid-span-12{ grid-column: span 12; }
-
 /* ---------- 10) Footer (upgrade) ---------- */
 .footerBrand{ min-width:0; }
 .footerName{
@@ -640,3 +581,62 @@ textarea{ min-height: 120px; resize: vertical; }
 @media (max-width: 900px){
   .footerNav{ justify-self:start; }
 }
+
+/* ---------- 11) Tables (optional) ---------- */
+.table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  overflow:hidden;
+  border-radius: var(--r20);
+  border:1px solid var(--line);
+  background: rgba(255,255,255,.02);
+}
+.table th, .table td{
+  padding:12px 12px;
+  border-bottom:1px solid var(--line);
+  text-align:left;
+}
+.table th{
+  background: rgba(255,255,255,.04);
+  color: rgba(238,242,255,.92);
+  font-weight:900;
+}
+.table tr:last-child td{ border-bottom:none; }
+
+/* ---------- 12) Small polish ---------- */
+.hr-glow{
+  height:1px;
+  background: linear-gradient(90deg, transparent, rgba(213,43,30,.65), rgba(26,116,255,.65), transparent);
+  opacity:.55;
+}
+
+.glow-border{
+  border:1px solid transparent;
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    var(--grad-brand) border-box;
+  border-radius: var(--r20);
+}
+
+.note{
+  padding: 12px 14px;
+  border-radius: 16px;
+  border:1px solid var(--line);
+  background: rgba(255,255,255,.03);
+  color: rgba(238,242,255,.9);
+}
+
+.reveal{
+  opacity:0;
+  transform: translateY(10px);
+  transition: opacity .5s var(--ease), transform .5s var(--ease);
+}
+.reveal.is-in{ opacity:1; transform:none; }
+@media (prefers-reduced-motion: reduce){
+  .reveal{ opacity:1; transform:none; }
+}
+
+/* --- PrefabHomesCanada: helpers for your HTML grid spans --- */
+.grid-span-6{ grid-column: span 6; }
+.grid-span-12{ grid-column: span 12; }
