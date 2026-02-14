@@ -503,11 +503,13 @@ textarea{ min-height: 120px; resize: vertical; }
 
 /* ---------- 10) Footer (upgrade) ---------- */
 .footerBrand{ min-width:0; }
+
 .footerName{
   display:inline-block;
   font-weight: 950;
   letter-spacing: .2px;
 }
+
 .footerBlurb{ margin-top: 8px; max-width: 62ch; }
 
 /* Footer brand icon row */
@@ -518,6 +520,7 @@ textarea{ min-height: 120px; resize: vertical; }
   margin-bottom:8px;
 }
 
+/* Icon: premium + matches your red/blue brand */
 .footerIcon{
   width:28px;
   height:28px;
@@ -525,14 +528,27 @@ textarea{ min-height: 120px; resize: vertical; }
   object-fit:cover;
   flex:0 0 auto;
 
-  /* matches your design language */
-  background: rgba(255,255,255,.04);
+  /* premium surface */
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
   padding:4px;
-  box-shadow: var(--shadow2);
-  border: 1px solid rgba(255,255,255,.10);
+
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow:
+    var(--shadow2),
+    0 0 0 1px rgba(26,116,255,.12),
+    0 0 22px rgba(213,43,30,.10);
+
+  transition: transform .18s var(--ease), filter .18s var(--ease);
+}
+
+.footerBrandRow:hover .footerIcon{
+  transform: translateY(-1px);
+  filter: brightness(1.05);
 }
 
 .footerNav{ justify-self:end; }
+
 .footerTitle{
   margin: 2px 0 10px;
   opacity: .85;
@@ -548,6 +564,7 @@ textarea{ min-height: 120px; resize: vertical; }
   display:grid;
   gap:8px;
 }
+
 .footerLinksList a{
   display:inline-flex;
   padding: 8px 10px;
@@ -556,10 +573,12 @@ textarea{ min-height: 120px; resize: vertical; }
   background: rgba(255,255,255,.03);
   transition: background .18s var(--ease), border-color .18s var(--ease), transform .18s var(--ease);
 }
+
 .footerLinksList a:hover{
   background: rgba(255,255,255,.06);
   border-color: rgba(26,116,255,.22);
 }
+
 .footerLinksList a:active{ transform: translateY(1px); }
 
 .footerBottom{
@@ -594,6 +613,7 @@ textarea{ min-height: 120px; resize: vertical; }
   background: rgba(255,255,255,.03);
   opacity: .9;
 }
+
 .footerTop:hover{
   opacity: 1;
   background: rgba(255,255,255,.06);
