@@ -232,3 +232,9 @@
   if (y) y.textContent = String(new Date().getFullYear());
 
 })();
+
+// Footer year
+(() => {
+  const y = document.getElementById("y");
+  if (y) y.textContent = String(new Date().getFullYear());
+})();
