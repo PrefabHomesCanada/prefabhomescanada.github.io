@@ -510,6 +510,28 @@ textarea{ min-height: 120px; resize: vertical; }
 }
 .footerBlurb{ margin-top: 8px; max-width: 62ch; }
 
+/* Footer brand icon row */
+.footerBrandRow{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:8px;
+}
+
+.footerIcon{
+  width:28px;
+  height:28px;
+  border-radius:10px;
+  object-fit:cover;
+  flex:0 0 auto;
+
+  /* matches your design language */
+  background: rgba(255,255,255,.04);
+  padding:4px;
+  box-shadow: var(--shadow2);
+  border: 1px solid rgba(255,255,255,.10);
+}
+
 .footerNav{ justify-self:end; }
 .footerTitle{
   margin: 2px 0 10px;
