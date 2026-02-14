@@ -17,7 +17,8 @@
   const on  = (el, ev, fn, opts) => el && el.addEventListener(ev, fn, opts);
 
   const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
-  const prefersReduced = () => window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const prefersReduced = () =>
+    window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const safeCall = (fn, ...args) => { try { return fn(...args); } catch { return null; } };
 
@@ -41,7 +42,6 @@
 
   /* ---------- GA4 helpers (optional) ---------- */
   function track(eventName, params = {}) {
-    // Works only if gtag exists
     if (typeof window.gtag !== "function") return;
     safeCall(window.gtag, "event", eventName, {
       transport_type: "beacon",
@@ -61,10 +61,11 @@
 
     nav.classList.toggle(CFG.navOpenClass, opened);
     menuBtn.setAttribute("aria-expanded", opened ? "true" : "false");
-    menuBtn.setAttribute("aria-label", opened ? "Fermer le menu" : "Ouvrir le menu");
+    menuBtn.setAttribute("aria-label", opened ? "Close menu" : "Open menu");
 
-    // Lock body scroll when open (mobile)
+    // Lock scroll when open (mobile)
     document.documentElement.style.overflow = opened ? "hidden" : "";
+    document.body.style.overflow = opened ? "hidden" : "";
   }
 
   function toggleMenu() {
@@ -123,11 +124,8 @@
     if (!el) return;
 
     const y = window.scrollY + el.getBoundingClientRect().top - headerOffset();
-    if (prefersReduced()) {
-      window.scrollTo(0, y);
-    } else {
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
+    if (prefersReduced()) window.scrollTo(0, y);
+    else window.scrollTo({ top: y, behavior: "smooth" });
   }
 
   // Intercept same-page anchor clicks
@@ -148,10 +146,7 @@
   // If page loads with a hash, apply offset scroll
   on(window, "load", () => {
     const hash = window.location.hash;
-    if (hash && qs(hash)) {
-      // tiny delay to allow layout settle
-      setTimeout(() => scrollToHash(hash), 40);
-    }
+    if (hash && qs(hash)) setTimeout(() => scrollToHash(hash), 40);
   });
 
   /* ---------- active link (scrollspy) ---------- */
@@ -179,10 +174,7 @@
       ticking = false;
 
       // Header compact
-      if (header) {
-        header.classList.toggle(CFG.headerCompactClass, window.scrollY > CFG.headerCompactAt);
-      }
-
+      if (header) header.classList.toggle(CFG.headerCompactClass, window.scrollY > CFG.headerCompactAt);
       if (!sections.length) return;
 
       const offset = headerOffset();
@@ -203,7 +195,6 @@
   onScroll();
 
   /* ---------- optional: reveal on scroll (simple, safe) ---------- */
-  // Add class "reveal" in HTML on blocks you want to fade in.
   const revealEls = qsa(".reveal");
   if (revealEls.length && "IntersectionObserver" in window && !prefersReduced()) {
     const io = new IntersectionObserver((entries) => {
@@ -219,7 +210,6 @@
   }
 
   /* ---------- optional: basic form UX (if you have a contact form) ---------- */
-  // Adds loading state to buttons with data-loading="true"
   const forms = qsa("form");
   forms.forEach((form) => {
     on(form, "submit", () => {
@@ -228,10 +218,17 @@
 
       btn.dataset.prevText = btn.textContent || "";
       btn.disabled = true;
-      btn.textContent = btn.getAttribute("data-loading-text") || "Envoi…";
+      btn.textContent = btn.getAttribute("data-loading-text") || "Sending…";
 
-      track("form_submit", { event_category: "lead", event_label: form.getAttribute("id") || "form" });
+      track("form_submit", {
+        event_category: "lead",
+        event_label: form.getAttribute("id") || "form"
+      });
     });
   });
+
+  /* ---------- footer year ---------- */
+  const y = document.getElementById("y");
+  if (y) y.textContent = String(new Date().getFullYear());
 
 })();
