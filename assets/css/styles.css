@@ -736,14 +736,26 @@ textarea{ min-height: 120px; resize: vertical; }
 .grid-span-6{ grid-column: span 6; }
 .grid-span-12{ grid-column: span 12; }
 
-/* Icon heading (cheap + clean) */
-.h3icon{display:flex;gap:.6rem;align-items:center}
-.h3icon .ico{
-  width:34px;height:34px;display:grid;place-items:center;
-  border-radius:12px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.12);
-  font-size:18px;line-height:1;
-  flex:0 0 34px;
+/* Heading with inline SVG icon */
+.h3icon{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
+.h3icon .ico{
+  width:20px;
+  height:20px;
+  flex:0 0 20px;
+  display:inline-flex;
+}
+
+.h3icon .ico svg{
+  width:100%;
+  height:100%;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
