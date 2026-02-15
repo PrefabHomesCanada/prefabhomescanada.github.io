@@ -729,6 +729,38 @@ textarea{ min-height: 120px; resize: vertical; }
   .reveal{ opacity:1; transform:none; }
 }
 
+/* Footer links: 2 columns */
+.footerLinksGrid{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap:8px;
+}
+
+.footerLinksGrid a{
+  display:flex;
+  align-items:center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: rgba(255,255,255,.03);
+  transition: background .18s var(--ease), border-color .18s var(--ease), transform .18s var(--ease);
+}
+
+.footerLinksGrid a:hover{
+  background: rgba(255,255,255,.06);
+  border-color: rgba(26,116,255,.22);
+}
+.footerLinksGrid a:active{ transform: translateY(1px); }
+
+/* Mobile: back to 1 column */
+@media (max-width: 520px){
+  .footerLinksGrid{ grid-template-columns: 1fr; }
+}
+
+
 /* --- PrefabHomesCanada: helpers for your HTML grid spans --- */
 .grid-span-6{ grid-column: span 6; }
 .grid-span-12{ grid-column: span 12; }
