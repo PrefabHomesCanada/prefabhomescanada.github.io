@@ -735,3 +735,15 @@ textarea{ min-height: 120px; resize: vertical; }
 /* --- PrefabHomesCanada: helpers for your HTML grid spans --- */
 .grid-span-6{ grid-column: span 6; }
 .grid-span-12{ grid-column: span 12; }
+
+/* Icon heading (cheap + clean) */
+.h3icon{display:flex;gap:.6rem;align-items:center}
+.h3icon .ico{
+  width:34px;height:34px;display:grid;place-items:center;
+  border-radius:12px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  font-size:18px;line-height:1;
+  flex:0 0 34px;
+}
+
