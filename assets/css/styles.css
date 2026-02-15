@@ -133,8 +133,6 @@ h3{ font-size:clamp(18px, 2vw, 22px); }
 
 /* UPDATE: anchors offset already good */
 .anchor{ scroll-margin-top: calc(var(--headerH) + 14px); }
-
-/* Optional: if you add <body id="top"> or <div id="top"></div>, it will land nicely */
 #top{ scroll-margin-top: calc(var(--headerH) + 14px); }
 
 .kicker{
@@ -164,8 +162,6 @@ h3{ font-size:clamp(18px, 2vw, 22px); }
   background: rgba(7,10,18,.82);
   border-bottom: 1px solid var(--line);
 }
-
-/* If supported */
 @supports (backdrop-filter: blur(10px)){
   .site-header{
     backdrop-filter: blur(10px);
@@ -182,12 +178,8 @@ h3{ font-size:clamp(18px, 2vw, 22px); }
 }
 
 /* UPDATE: header compact class (your JS adds .is-compact) */
-.site-header.is-compact .header-inner{
-  padding: 10px 0;
-}
-.site-header.is-compact .brand img{
-  height:44px;
-}
+.site-header.is-compact .header-inner{ padding: 10px 0; }
+.site-header.is-compact .brand img{ height:44px; }
 
 .brand{
   display:flex;
@@ -195,14 +187,8 @@ h3{ font-size:clamp(18px, 2vw, 22px); }
   gap:12px;
   min-width: 220px;
 }
-.brand img{
-  height:48px;
-  width:auto;
-}
-.brand .brand-name{
-  display:none;
-  font-weight:900;
-}
+.brand img{ height:48px; width:auto; }
+.brand .brand-name{ display:none; font-weight:900; }
 
 .nav{
   display:flex;
@@ -222,8 +208,6 @@ h3{ font-size:clamp(18px, 2vw, 22px); }
   background: rgba(26,116,255,.14);
   border:1px solid rgba(26,116,255,.24);
 }
-
-/* UPDATE: better focus */
 .nav a:focus-visible{
   outline: 3px solid rgba(26,116,255,.45);
   outline-offset: 3px;
@@ -247,7 +231,6 @@ h3{ font-size:clamp(18px, 2vw, 22px); }
 }
 @media (max-width: 920px){
   #menuBtn{ display:inline-flex; }
-
   .site-header{ position:sticky; }
 
   .nav{
@@ -255,10 +238,7 @@ h3{ font-size:clamp(18px, 2vw, 22px); }
     position:absolute;
     left: var(--pad);
     right: var(--pad);
-
-    /* UPDATE: align to header height instead of hardcoded 70px */
     top: calc(var(--headerH) - 8px);
-
     flex-direction:column;
     gap:6px;
     padding:12px;
@@ -346,13 +326,20 @@ h3{ font-size:clamp(18px, 2vw, 22px); }
 }
 .hero-sub{ font-size: clamp(16px, 1.4vw, 18px); color: rgba(238,242,255,.86); }
 
-/* ---------- 6.2) Hero media (right column) + TOC box — UPDATE ---------- */
+.cta-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:12px;
+}
+
+/* ---------- 6.2) Hero media (right column) + TOC box ---------- */
 .hero-media{ min-width:0; }
 .media-inner{ display:grid; gap:14px; }
 
 .hero-figure{
-  margin:0 0 14px;
-  border-radius: var(--r20);
+  margin:0;
+  border-radius: 0; /* coins carrés */
   overflow:hidden;
   border:1px solid rgba(255,255,255,.10);
   background: rgba(255,255,255,.02);
@@ -366,7 +353,15 @@ h3{ font-size:clamp(18px, 2vw, 22px); }
   display:block;
 }
 
-/* TOC container styles (if your HTML uses .tocBox / .tocList) */
+/* Keep any caption small + muted if you add figcaption later */
+.hero-figure figcaption{
+  padding: 10px 2px 0;
+  color: var(--muted);
+  font-size: 14px;
+  opacity: .9;
+}
+
+/* TOC box */
 .tocBox{
   border:1px solid rgba(255,255,255,.12);
   border-radius: var(--r20);
@@ -380,20 +375,23 @@ h3{ font-size:clamp(18px, 2vw, 22px); }
 .tocTitle{ margin:0 0 6px; }
 .tocSub{ margin:0 0 10px; opacity:.9; }
 
+/* no underline inside toc */
+.tocBox a{ text-decoration:none; color:inherit; }
+
 .tocList{
   list-style:none;
   margin:0;
   padding:0;
   display:grid;
-  gap:8px;
+  gap:10px;
 }
 .tocList a{
-  display:inline-flex;
+  display:block;
   width:100%;
-  padding: 8px 10px;
-  border-radius: 12px;
+  padding: 14px 14px;
+  border-radius: 14px;
   background: rgba(255,255,255,.03);
-  border: 1px solid transparent;
+  border: 1px solid rgba(255,255,255,.08);
   transition: background .18s var(--ease), border-color .18s var(--ease), transform .18s var(--ease);
 }
 .tocList a:hover{
@@ -404,27 +402,12 @@ h3{ font-size:clamp(18px, 2vw, 22px); }
 .tocList a:focus-visible{
   outline: 3px solid rgba(26,116,255,.45);
   outline-offset: 3px;
-  border-radius: 12px;
 }
 
 /* ---------- 6.5) Page helpers used by your article HTML ---------- */
-.toc a{ text-decoration: underline; text-underline-offset: 3px; }
-
-.cta-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-  margin-top:12px;
-}
-
-.specs{
-  margin:10px 0 0;
-  padding-left:18px;
-}
-.specs li{
-  margin:6px 0;
-  color: rgba(238,242,255,.88);
-}
+.toc a{ text-decoration:none; } /* safe fallback */
+.specs{ margin:10px 0 0; padding-left:18px; }
+.specs li{ margin:6px 0; color: rgba(238,242,255,.88); }
 
 .proscons{
   display:grid;
@@ -503,7 +486,7 @@ h3{ font-size:clamp(18px, 2vw, 22px); }
 @media (max-width: 980px){ .card{ grid-column: span 6; } }
 @media (max-width: 640px){ .card{ grid-column: span 12; } }
 
-/* UPDATE: image/media inside cards (your HTML uses .card-media) */
+/* image/media inside cards */
 .card-media{
   margin: 0 0 12px;
   border-radius: 16px;
@@ -572,7 +555,7 @@ textarea{ min-height: 120px; resize: vertical; }
   .footer-grid{ grid-template-columns:1fr; }
 }
 
-/* ---------- 10) Footer (upgrade) ---------- */
+/* Footer (upgrade) */
 .footerBrand{ min-width:0; }
 
 .footerName{
@@ -692,7 +675,7 @@ textarea{ min-height: 120px; resize: vertical; }
 
 .table{
   width:100%;
-  min-width: 860px; /* UPDATE: helps horizontal scroll on mobile */
+  min-width: 860px;
   border-collapse:separate;
   border-spacing:0;
   overflow:hidden;
