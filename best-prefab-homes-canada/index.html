@@ -272,12 +272,13 @@
   </header>
 
   <main id="main">
+    
     <!-- HERO -->
-<!-- HERO -->
-<section class="hero">
+    <section class="hero">
   <div class="wrap hero-grid">
     <div class="hero-card">
       <span class="kicker">2026 Canada guide</span>
+
       <h1 class="hero-title">7 Best Prefab Homes on Amazon Canada (2026 Guide)</h1>
 
       <p class="hero-sub">
@@ -286,7 +287,7 @@
         factor in delivery, foundations, permits, plumbing, electrical, insulation, and winterization.
       </p>
 
-      <div class="pillrow">
+      <div class="pillrow" aria-label="Key points">
         <span class="pill2">No hype</span>
         <span class="pill2">Canada-first costs</span>
         <span class="pill2">What to verify before buying</span>
@@ -298,6 +299,11 @@
         <a class="btn btn-ghost" href="#real-costs">See real cost breakdown</a>
       </div>
 
+      <!-- Optional: tiny trust strip (uses your .note styling) -->
+      <div class="note" style="margin-top:12px">
+        <strong>Canada reality check:</strong> permits + zoning + insulation + snow-load claims should be verified with your municipality and the seller.
+      </div>
+
       <p class="disclaimer hero-disclaimer">
         Important: Local rules vary widely. Before you buy, confirm zoning and occupancy rules with your municipality and request documentation from the seller
         (drawings/specs, electrical approvals, insulation details, and any snow-load or wind-load claims).
@@ -307,7 +313,7 @@
     <aside class="hero-media" aria-label="Page navigation">
       <div class="media-inner">
 
-        <!-- HERO IMAGE (match home styling) -->
+        <!-- HERO IMAGE -->
         <figure class="hero-figure">
           <picture>
             <source type="image/webp"
@@ -326,11 +332,12 @@
           </picture>
         </figure>
 
-        <!-- TOC -->
-        <div class="noteBox toc tocBox">
-          <h2 class="tocTitle">On this page</h2>
+        <!-- TOC (updated: no .specs here, so your .tocList CSS applies perfectly) -->
+        <nav class="tocBox toc" aria-label="On this page">
+          <p class="tocTitle" style="margin:0 0 6px; font-weight:900;">On this page</p>
           <p class="small tocSub">Use these anchors to skip to what you need.</p>
-          <ul class="specs tocList">
+
+          <ul class="tocList">
             <li><a href="#comparison">Quick comparison (Top 7)</a></li>
             <li><a href="#reviews">Detailed reviews (1–7)</a></li>
             <li><a href="#not-included">What Amazon listings don’t include</a></li>
@@ -339,7 +346,7 @@
             <li><a href="#faq">FAQ</a></li>
             <li><a href="#disclosure">Affiliate disclosure</a></li>
           </ul>
-        </div>
+        </nav>
 
       </div>
     </aside>
