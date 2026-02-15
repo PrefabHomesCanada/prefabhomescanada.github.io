@@ -29,7 +29,8 @@
   <link rel="preload" as="image"
     href="/assets/images/hero/cost-of-prefab-home-canada-1600x900.webp"
     imagesrcset="/assets/images/hero/cost-of-prefab-home-canada-1600x900.webp 1600w, /assets/images/hero/cost-of-prefab-home-canada-2400x1350.webp 2400w"
-    imagesizes="(max-width: 979px) 100vw, 40vw">
+    imagesizes="(max-width: 979px) 100vw, 40vw"
+    fetchpriority="high">
 
   <!-- Open Graph -->
   <meta property="og:type" content="article">
@@ -41,12 +42,66 @@
   <meta property="og:image" content="https://prefabhomescanada.github.io/assets/images/og/cost-of-prefab-home-canada-og-1200x630.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Modern prefab home in Canada — installed cost breakdown guide (2026)">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="article:published_time" content="2026-01-01">
+  <meta property="article:modified_time" content="2026-01-01">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Cost of a Prefab Home in Canada (2026): Real Installed Price Breakdown">
   <meta name="twitter:description" content="A realistic Canada-first breakdown: what drives installed prefab home cost beyond the listing price.">
   <meta name="twitter:image" content="https://prefabhomescanada.github.io/assets/images/og/cost-of-prefab-home-canada-og-1200x630.webp">
+
+  <!-- JSON-LD: Organization (site entity) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "@id":"https://prefabhomescanada.github.io/#organization",
+    "name":"PrefabHomesCanada",
+    "url":"https://prefabhomescanada.github.io/",
+    "logo":{
+      "@type":"ImageObject",
+      "url":"https://prefabhomescanada.github.io/android-chrome-512x512.png",
+      "width":512,
+      "height":512
+    }
+  }
+  </script>
+
+  <!-- JSON-LD: WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "@id":"https://prefabhomescanada.github.io/#website",
+    "name":"PrefabHomesCanada",
+    "url":"https://prefabhomescanada.github.io/",
+    "publisher":{"@id":"https://prefabhomescanada.github.io/#organization"},
+    "inLanguage":"en-CA"
+  }
+  </script>
+
+  <!-- JSON-LD: WebPage -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "@id":"https://prefabhomescanada.github.io/cost-of-prefab-home-canada/#webpage",
+    "url":"https://prefabhomescanada.github.io/cost-of-prefab-home-canada/",
+    "name":"Cost of a Prefab Home in Canada (2026): Real Installed Price Breakdown",
+    "isPartOf":{"@id":"https://prefabhomescanada.github.io/#website"},
+    "about":{"@id":"https://prefabhomescanada.github.io/#organization"},
+    "inLanguage":"en-CA",
+    "primaryImageOfPage":{
+      "@type":"ImageObject",
+      "url":"https://prefabhomescanada.github.io/assets/images/og/cost-of-prefab-home-canada-og-1200x630.webp",
+      "width":1200,
+      "height":630
+    }
+  }
+  </script>
 
   <!-- JSON-LD: Article (enhanced) -->
   <script type="application/ld+json">
@@ -58,7 +113,7 @@
     "description":"Prefab home cost in Canada (2026): realistic installed price breakdown beyond the listing price. Delivery, foundation, permits, plumbing, electrical, insulation, winterization, and FAQs.",
     "inLanguage":"en-CA",
     "url":"https://prefabhomescanada.github.io/cost-of-prefab-home-canada/",
-    "mainEntityOfPage":{"@type":"WebPage","@id":"https://prefabhomescanada.github.io/cost-of-prefab-home-canada/"},
+    "mainEntityOfPage":{"@id":"https://prefabhomescanada.github.io/cost-of-prefab-home-canada/#webpage"},
     "image":{
       "@type":"ImageObject",
       "url":"https://prefabhomescanada.github.io/assets/images/og/cost-of-prefab-home-canada-og-1200x630.webp",
@@ -66,23 +121,10 @@
       "height":630
     },
     "author":{"@type":"Organization","name":"PrefabHomesCanada Editorial"},
-    "publisher":{
-      "@type":"Organization",
-      "name":"PrefabHomesCanada",
-      "url":"https://prefabhomescanada.github.io/",
-      "logo":{
-        "@type":"ImageObject",
-        "url":"https://prefabhomescanada.github.io/android-chrome-512x512.png"
-      }
-    },
+    "publisher":{"@id":"https://prefabhomescanada.github.io/#organization"},
     "datePublished":"2026-01-01",
     "dateModified":"2026-01-01",
-    "isPartOf":{
-      "@type":"WebSite",
-      "@id":"https://prefabhomescanada.github.io/#website",
-      "name":"PrefabHomesCanada",
-      "url":"https://prefabhomescanada.github.io/"
-    }
+    "isPartOf":{"@id":"https://prefabhomescanada.github.io/#website"}
   }
   </script>
 
@@ -165,6 +207,9 @@
 
       <nav class="nav" id="nav" aria-label="Primary">
         <a href="/best-prefab-homes-canada/">Guides</a>
+        <a href="/permits-by-province/">Permits by province</a>
+        <a href="/foundation-options-canada/">Foundation options</a>
+        <a href="/winterization-prefab/">Winterization</a>
         <a href="/how-we-test/">How we test</a>
         <a href="/methodology/">Methodology</a>
         <a href="/about/">About</a>
@@ -184,6 +229,12 @@
         <div class="hero-card" style="align-self:flex-start; margin-top:-28px;">
           <span class="kicker">Canada-first • 2026</span>
           <h1 class="hero-title">Cost of a Prefab Home in Canada (2026)</h1>
+
+          <!-- OPTIONAL but recommended: visible “Last updated” line for trust -->
+          <p class="small muted" style="margin:6px 0 0;">
+            Published: <time datetime="2026-01-01">Jan 1, 2026</time> · Last updated:
+            <time datetime="2026-01-01">Jan 1, 2026</time>
+          </p>
 
           <p class="hero-sub">
             Most “prefab home price” conversations start and end with the listing price. In Canada, that’s rarely the real budget.
@@ -243,10 +294,14 @@
               <ul class="tocList">
                 <li><a href="#what-is-real">Why the listing price isn’t the real price</a></li>
                 <li><a href="#breakdown">Installed cost breakdown (Canada)</a></li>
+                <li><a href="#supporting-guides">Supporting guides (permits, foundations, winterization)</a></li>
                 <li><a href="#scenarios">Example scenarios (small / mid / larger)</a></li>
                 <li><a href="#checklist">Buyer checklist (before you buy)</a></li>
                 <li><a href="#faq">FAQ</a></li>
                 <li><a href="/best-prefab-homes-canada/">Best prefab homes (Top 7)</a></li>
+                <li><a href="/permits-by-province/">Permits by province</a></li>
+                <li><a href="/foundation-options-canada/">Foundation options</a></li>
+                <li><a href="/winterization-prefab/">Winterization</a></li>
                 <li><a href="/how-we-test/">How we test</a></li>
                 <li><a href="/methodology/">Methodology</a></li>
                 <li><a href="/disclosure/">Affiliate disclosure</a></li>
@@ -281,6 +336,9 @@
             <h3 class="h3">Related guides (recommended next)</h3>
             <ul class="specs">
               <li><a href="/best-prefab-homes-canada/">Best prefab homes on Amazon Canada (Top 7)</a> (start here if you’re still shopping)</li>
+              <li><a href="/permits-by-province/">Permits by province</a> (what municipalities typically ask for)</li>
+              <li><a href="/foundation-options-canada/">Foundation options (Canada)</a> (slab vs piers vs frost-protected)</li>
+              <li><a href="/winterization-prefab/">Winterization</a> (freeze protection + envelope planning)</li>
               <li><a href="/how-we-test/">How we test</a> (what we check before recommending)</li>
               <li><a href="/methodology/">Methodology</a> (our evaluation framework)</li>
               <li><a href="/disclosure/">Disclosure</a> (affiliate link transparency)</li>
@@ -431,7 +489,7 @@
             <ul class="specs">
               <li><strong>Common options:</strong> slab-on-grade, piers, frost-protected systems, basement, engineered pad.</li>
               <li><strong>What drives it:</strong> frost depth, soil, slope, loads, local requirements, engineer involvement.</li>
-              <li><strong>Ask for:</strong> stamped drawings/engineering needs (if any) and installation instructions.</li>
+              <li><strong>Shortcut:</strong> see <a href="/foundation-options-canada/">Foundation options (Canada)</a> for a practical comparison.</li>
             </ul>
           </div>
 
@@ -452,7 +510,7 @@
             <ul class="specs">
               <li><strong>What drives it:</strong> zoning, building permit, electrical inspection, plumbing inspection, occupancy rules.</li>
               <li><strong>Ask the municipality:</strong> required drawings, minimum standards, use type restrictions.</li>
-              <li><strong>Ask the seller:</strong> what documentation they provide for permitting.</li>
+              <li><strong>Shortcut:</strong> start with <a href="/permits-by-province/">Permits by province</a> to know what questions to ask locally.</li>
             </ul>
           </div>
 
@@ -610,6 +668,59 @@
 
     <div class="wrap"><div class="sep"></div></div>
 
+    <!-- SUPPORTING GUIDES -->
+    <section id="supporting-guides" class="section anchor">
+      <div class="wrap">
+        <h2>Supporting guides (permits, foundations, winterization)</h2>
+        <p class="sub">
+          If you want fewer surprises, these three topics are the usual “budget swing” points. Use them to ask better questions before you buy.
+        </p>
+
+        <div class="grid">
+          <div class="card grid-span-4">
+            <h3>Permits by province</h3>
+            <p class="small muted">
+              A practical overview of what municipalities commonly require and how to prep your documentation.
+            </p>
+            <p class="small">
+              <a class="btn btn-ghost" href="/permits-by-province/">Open permits guide</a>
+            </p>
+          </div>
+
+          <div class="card grid-span-4">
+            <h3>Foundation options (Canada)</h3>
+            <p class="small muted">
+              Slab vs piers vs frost-protected systems: what changes cost, complexity, and inspections.
+            </p>
+            <p class="small">
+              <a class="btn btn-ghost" href="/foundation-options-canada/">Open foundation guide</a>
+            </p>
+          </div>
+
+          <div class="card grid-span-4">
+            <h3>Winterization (prefab)</h3>
+            <p class="small muted">
+              Freeze protection, plumbing strategy, envelope basics, and common cold-weather failure points.
+            </p>
+            <p class="small">
+              <a class="btn btn-ghost" href="/winterization-prefab/">Open winterization guide</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="noteBox" style="margin-top:14px;">
+          <h3 class="h3">Why these matter</h3>
+          <ul class="specs">
+            <li><strong>Permits:</strong> missing drawings/specs can stop the project before it starts.</li>
+            <li><strong>Foundation:</strong> frost depth + soil + access usually drives scope.</li>
+            <li><strong>Winterization:</strong> “fine in photos” can fail fast without a freeze plan.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap"><div class="sep"></div></div>
+
     <!-- SCENARIOS -->
     <section id="scenarios" class="section anchor">
       <div class="wrap">
@@ -683,6 +794,7 @@
               <li>Confirm zoning and permitted use (seasonal vs year-round, accessory dwelling, etc.).</li>
               <li>Confirm setbacks, minimum size, height restrictions, and driveway/access rules.</li>
               <li>Ask what documents are required for permitting (drawings, foundation plan, engineering).</li>
+              <li class="small muted">Shortcut: <a href="/permits-by-province/">Permits by province</a> helps you ask the right questions locally.</li>
             </ul>
           </div>
 
@@ -692,6 +804,7 @@
               <li>Choose the foundation/base concept (slab/piers/etc.) that fits your site and rules.</li>
               <li>Confirm delivery and offload plan (equipment, access, staging area).</li>
               <li>Confirm drainage plan (water moves away from the unit).</li>
+              <li class="small muted">Shortcut: <a href="/foundation-options-canada/">Foundation options (Canada)</a>.</li>
             </ul>
           </div>
 
@@ -701,6 +814,7 @@
               <li>Power: service plan, inspection steps, distance/trenching needs.</li>
               <li>Water: municipal vs well, winter strategy, shutoffs and access.</li>
               <li>Wastewater: septic vs sewer, design/testing requirements.</li>
+              <li class="small muted">Cold-weather note: see <a href="/winterization-prefab/">Winterization</a> before choosing your plumbing approach.</li>
             </ul>
           </div>
 
@@ -831,11 +945,12 @@
         <ul class="footerLinksGrid">
           <li><a href="/best-prefab-homes-canada/">Best prefab homes</a></li>
           <li><a href="/cost-of-prefab-home-canada/">Cost of prefab homes</a></li>
+          <li><a href="/permits-by-province/">Permits by province</a></li>
+          <li><a href="/foundation-options-canada/">Foundation options</a></li>
+          <li><a href="/winterization-prefab/">Winterization</a></li>
           <li><a href="/how-we-test/">How we test</a></li>
           <li><a href="/methodology/">Methodology</a></li>
           <li><a href="/about/">About</a></li>
-          <li><a href="/disclosure/">Disclosure</a></li>
-          <li><a href="/privacy-policy/">Privacy policy</a></li>
         </ul>
       </nav>
     </div>
@@ -845,6 +960,7 @@
         <span>© <span id="y"></span> PrefabHomesCanada</span>
         <span class="footerDot" aria-hidden="true">•</span>
         <a href="/privacy-policy/">Privacy policy</a>
+        <a href="/disclosure/">Disclosure</a>.
         <span class="footerDot" aria-hidden="true">•</span>
         <span class="footerMuted">Listings can change. Verify documentation before purchase.</span>
       </div>
