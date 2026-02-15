@@ -346,6 +346,67 @@ h3{ font-size:clamp(18px, 2vw, 22px); }
 }
 .hero-sub{ font-size: clamp(16px, 1.4vw, 18px); color: rgba(238,242,255,.86); }
 
+/* ---------- 6.2) Hero media (right column) + TOC box — UPDATE ---------- */
+.hero-media{ min-width:0; }
+.media-inner{ display:grid; gap:14px; }
+
+.hero-figure{
+  margin:0 0 14px;
+  border-radius: var(--r20);
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.02);
+  box-shadow: var(--shadow2);
+}
+.hero-img{
+  width:100%;
+  height:auto;
+  aspect-ratio:16/9;
+  object-fit:cover;
+  display:block;
+}
+
+/* TOC container styles (if your HTML uses .tocBox / .tocList) */
+.tocBox{
+  border:1px solid rgba(255,255,255,.12);
+  border-radius: var(--r20);
+  background:
+    radial-gradient(800px 420px at 20% 0%, rgba(213,43,30,.12), transparent 60%),
+    radial-gradient(800px 420px at 80% 10%, rgba(26,116,255,.10), transparent 60%),
+    rgba(255,255,255,.03);
+  box-shadow: var(--shadow2);
+  padding: 14px;
+}
+.tocTitle{ margin:0 0 6px; }
+.tocSub{ margin:0 0 10px; opacity:.9; }
+
+.tocList{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  gap:8px;
+}
+.tocList a{
+  display:inline-flex;
+  width:100%;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid transparent;
+  transition: background .18s var(--ease), border-color .18s var(--ease), transform .18s var(--ease);
+}
+.tocList a:hover{
+  background: rgba(255,255,255,.06);
+  border-color: rgba(26,116,255,.22);
+}
+.tocList a:active{ transform: translateY(1px); }
+.tocList a:focus-visible{
+  outline: 3px solid rgba(26,116,255,.45);
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+
 /* ---------- 6.5) Page helpers used by your article HTML ---------- */
 .toc a{ text-decoration: underline; text-underline-offset: 3px; }
 
