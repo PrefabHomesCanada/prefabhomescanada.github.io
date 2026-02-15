@@ -25,6 +25,21 @@
   <!-- Shared CSS -->
   <link rel="stylesheet" href="/assets/css/styles.css">
 
+  <!-- Small page-only tweaks (OK to move into styles.css later) -->
+  <style>
+    .hero-grid-top{align-items:flex-start;}
+    .hero-card-top{align-self:flex-start;margin-top:-28px;}
+    .hero-media-top{align-self:flex-start;margin-top:0;}
+    .media-inner-top{margin-top:0;}
+    .hero-figure-reset{margin:0;}
+    .hero-img-reset{display:block;width:100%;height:auto;border-radius:0;}
+    .tocTitleStrong{margin:0 0 6px;font-weight:900;}
+    .mutedTopLine{margin:6px 0 0;}
+    @media (max-width: 720px){
+      .hero-card-top{margin-top:0;}
+    }
+  </style>
+
   <!-- Preload LCP (hero image) -->
   <link rel="preload" as="image"
     href="/assets/images/hero/cost-of-prefab-home-canada-1600x900.webp"
@@ -40,12 +55,13 @@
   <meta property="og:description" content="A realistic Canada-first breakdown: what drives installed prefab home cost beyond the listing price.">
   <meta property="og:url" content="https://prefabhomescanada.github.io/cost-of-prefab-home-canada/">
   <meta property="og:image" content="https://prefabhomescanada.github.io/assets/images/og/cost-of-prefab-home-canada-og-1200x630.webp">
+  <meta property="og:image:secure_url" content="https://prefabhomescanada.github.io/assets/images/og/cost-of-prefab-home-canada-og-1200x630.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Modern prefab home in Canada — installed cost breakdown guide (2026)">
   <meta property="og:image:type" content="image/webp">
   <meta property="article:published_time" content="2026-01-01">
-  <meta property="article:modified_time" content="2026-01-01">
+  <meta property="article:modified_time" content="2026-02-15">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
@@ -103,11 +119,11 @@
   }
   </script>
 
-  <!-- JSON-LD: Article (enhanced) -->
+  <!-- JSON-LD: BlogPosting (guide-style article) -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
-    "@type":"Article",
+    "@type":"BlogPosting",
     "@id":"https://prefabhomescanada.github.io/cost-of-prefab-home-canada/#article",
     "headline":"Cost of a Prefab Home in Canada (2026): Real Installed Price Breakdown",
     "description":"Prefab home cost in Canada (2026): realistic installed price breakdown beyond the listing price. Delivery, foundation, permits, plumbing, electrical, insulation, winterization, and FAQs.",
@@ -123,7 +139,7 @@
     "author":{"@type":"Organization","name":"PrefabHomesCanada Editorial"},
     "publisher":{"@id":"https://prefabhomescanada.github.io/#organization"},
     "datePublished":"2026-01-01",
-    "dateModified":"2026-01-01",
+    "dateModified":"2026-02-15",
     "isPartOf":{"@id":"https://prefabhomescanada.github.io/#website"}
   }
   </script>
@@ -196,7 +212,7 @@
           alt="PrefabHomesCanada"
           width="1000"
           height="250"
-          loading="eager"
+          loading="lazy"
           decoding="async">
       </a>
 
@@ -225,15 +241,14 @@
   <main id="main">
     <!-- HERO -->
     <section class="hero">
-      <div class="wrap hero-grid" style="align-items:flex-start;">
-        <div class="hero-card" style="align-self:flex-start; margin-top:-28px;">
+      <div class="wrap hero-grid hero-grid-top">
+        <div class="hero-card hero-card-top">
           <span class="kicker">Canada-first • 2026</span>
           <h1 class="hero-title">Cost of a Prefab Home in Canada (2026)</h1>
 
-          <!-- OPTIONAL but recommended: visible “Last updated” line for trust -->
-          <p class="small muted" style="margin:6px 0 0;">
+          <p class="small muted mutedTopLine">
             Published: <time datetime="2026-01-01">Jan 1, 2026</time> · Last updated:
-            <time datetime="2026-01-01">Jan 1, 2026</time>
+            <time datetime="2026-02-15">Feb 15, 2026</time>
           </p>
 
           <p class="hero-sub">
@@ -264,31 +279,30 @@
           </p>
         </div>
 
-        <aside class="hero-media" aria-label="Page navigation" style="align-self:flex-start; margin-top:0;">
-          <div class="media-inner" style="margin-top:0;">
+        <aside class="hero-media hero-media-top" aria-label="Page navigation">
+          <div class="media-inner media-inner-top">
 
-            <figure class="hero-figure" style="margin:0;">
+            <figure class="hero-figure hero-figure-reset">
               <picture>
                 <source type="image/webp"
                   srcset="/assets/images/hero/cost-of-prefab-home-canada-1600x900.webp 1600w,
                           /assets/images/hero/cost-of-prefab-home-canada-2400x1350.webp 2400w"
                   sizes="(max-width: 979px) 100vw, 40vw">
                 <img
-                  class="hero-img"
+                  class="hero-img hero-img-reset"
                   src="/assets/images/hero/cost-of-prefab-home-canada-1600x900.webp"
                   width="1600"
                   height="900"
                   alt="Modern prefab home site in Canada with realistic installation context – cost breakdown guide"
                   loading="eager"
                   decoding="async"
-                  fetchpriority="high"
-                  style="display:block;width:100%;height:auto;border-radius:0;">
+                  fetchpriority="high">
               </picture>
               <figcaption class="small muted">Installed cost = listing price + site + approvals + utilities + climate upgrades.</figcaption>
             </figure>
 
             <nav class="tocBox toc" aria-label="On this page">
-              <p class="tocTitle" style="margin:0 0 6px; font-weight:900;">On this page</p>
+              <p class="tocTitle tocTitleStrong">On this page</p>
               <p class="small tocSub">Use these anchors to skip to what you need.</p>
 
               <ul class="tocList">
@@ -315,6 +329,24 @@
 
     <div class="wrap"><div class="hr-glow"></div></div>
 
+    <!-- TRUST / E-E-A-T -->
+    <section class="section">
+      <div class="wrap">
+        <div class="noteBox">
+          <h2 class="h2">About this guide (what it is, and what it isn’t)</h2>
+          <p class="sub">
+            This page is a Canada-first planning guide to help you estimate <strong>installed cost</strong> drivers and avoid “listing-price-only” budgeting.
+            We don’t publish a single magic total because site conditions and approvals vary by municipality. We focus on the buckets that move budgets.
+          </p>
+          <ul class="specs">
+            <li><strong>Updated:</strong> <time datetime="2026-02-15">Feb 15, 2026</time> (structure + checklist improvements).</li>
+            <li><strong>How we evaluate:</strong> see <a href="/how-we-test/">How we test</a> and <a href="/methodology/">Methodology</a>.</li>
+            <li><strong>Disclosure:</strong> see <a href="/disclosure/">Disclosure</a> for affiliate link transparency.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <!-- KEY TAKEAWAYS -->
     <section class="section">
       <div class="wrap">
@@ -330,6 +362,15 @@
             <li><strong>Plan for climate:</strong> water, drainage, freeze protection, snow and wind realities by region.</li>
             <li><strong>Don’t force a fake total:</strong> get quotes for your site conditions instead of guessing.</li>
           </ul>
+
+          <div class="noteBox" style="margin-top:14px;">
+            <h3 class="h3">Common mistakes (quick avoid list)</h3>
+            <ul class="specs">
+              <li><strong>Paying before permits are clear:</strong> if zoning/use type is unclear, your install plan can collapse later.</li>
+              <li><strong>Assuming “wired” means “approval-ready”:</strong> missing documentation can trigger rewiring and delays.</li>
+              <li><strong>Ignoring drainage and freeze planning:</strong> water management is a long-term durability cost driver in Canada.</li>
+            </ul>
+          </div>
 
           <!-- RELATED (cluster reinforcement) -->
           <div class="noteBox" style="margin-top:14px;">
@@ -926,7 +967,7 @@
         <p class="footerTitle small">Site</p>
         <ul class="footerLinksGrid">
           <li><a href="/best-prefab-homes-canada/">Best prefab homes</a></li>
-          <li><a href="/cost-of-prefab-home-canada/">Cost of prefab homes</a></li>
+          <li><a href="/cost-of-prefab-home-canada/" aria-current="page">Cost of prefab homes</a></li>
           <li><a href="/permits-by-province/">Permits by province</a></li>
           <li><a href="/foundation-options-canada/">Foundation options</a></li>
           <li><a href="/winterization-prefab/">Winterization</a></li>
