@@ -741,13 +741,18 @@ textarea{ min-height: 120px; resize: vertical; }
   display:flex;
   align-items:center;
   gap:10px;
+  margin:0;                /* keeps heading spacing predictable */
 }
 
 .h3icon .ico{
   width:20px;
   height:20px;
-  flex:0 0 20px;
+  flex:0 0 20px;           /* fixed icon box */
+  flex-shrink:0;           /* never shrink on small screens */
   display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  line-height:0;           /* avoids baseline jiggle */
 }
 
 .h3icon .ico svg{
