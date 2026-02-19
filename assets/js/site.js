@@ -209,23 +209,99 @@
     revealEls.forEach((el) => io.observe(el));
   }
 
-  /* ---------- optional: basic form UX (if you have a contact form) ---------- */
-  const forms = qsa("form");
-  forms.forEach((form) => {
-    on(form, "submit", () => {
-      const btn = qs("button[type='submit'], input[type='submit']", form);
-      if (!btn) return;
+  /* ---------- forms: UX + Formspree AJAX (redirect guaranteed) ---------- */
+const forms = qsa("form");
 
-      btn.dataset.prevText = btn.textContent || "";
+function setFormError(form, msg) {
+  let box = qs(".formError", form);
+  if (!box) {
+    box = document.createElement("p");
+    box.className = "small formError";
+    box.style.marginTop = "10px";
+    box.style.padding = "10px 12px";
+    box.style.borderRadius = "12px";
+    box.style.border = "1px solid rgba(255,255,255,.18)";
+    box.style.background = "rgba(255,255,255,.06)";
+    box.style.color = "inherit";
+    form.appendChild(box);
+  }
+  box.textContent = msg;
+}
+
+forms.forEach((form) => {
+  const action = (form.getAttribute("action") || "").trim();
+  const isFormspree =
+    form.dataset.formspree === "true" ||
+    /https?:\/\/(www\.)?formspree\.io\/f\//i.test(action);
+
+  on(form, "submit", async (e) => {
+    // Always keep your nice button UX
+    const btn = qs("button[type='submit'], input[type='submit']", form);
+    const prevText = btn ? (btn.textContent || "") : "";
+
+    if (btn) {
+      btn.dataset.prevText = prevText;
       btn.disabled = true;
       btn.textContent = btn.getAttribute("data-loading-text") || "Sending…";
+    }
 
-      track("form_submit", {
-        event_category: "lead",
-        event_label: form.getAttribute("id") || "form"
-      });
+    track("form_submit", {
+      event_category: "lead",
+      event_label: form.getAttribute("id") || "form"
     });
+
+    // If it's NOT Formspree, let it submit normally
+    if (!isFormspree) return;
+
+    // Formspree: prevent default and send via fetch (so we control redirect)
+    e.preventDefault();
+
+    // Where to go after success
+    const next =
+      (form.dataset.next || "").trim() ||
+      (qs("input[name='_next']", form)?.value || "").trim() ||
+      "/thank-you/";
+
+    try {
+      const fd = new FormData(form);
+
+      // Optional: make reply-to work nicely
+      const email = (fd.get("email") || "").toString().trim();
+      if (email && !fd.get("_replyto")) fd.append("_replyto", email);
+
+      // Submit to Formspree
+      const res = await fetch(action, {
+        method: "POST",
+        body: fd,
+        headers: { "Accept": "application/json" }
+      });
+
+      if (res.ok) {
+        // Success: YOU redirect (never Formspree)
+        window.location.assign(next);
+        return;
+      }
+
+      // Error handling
+      let msg = "Something went wrong. Please try again in a moment.";
+      const data = await res.json().catch(() => null);
+      if (data?.errors?.length) msg = data.errors.map(e => e.message).join(" ");
+      setFormError(form, msg);
+
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = btn.dataset.prevText || "Send";
+      }
+    } catch (err) {
+      setFormError(form, "Network error. Please check your connection and try again.");
+
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = btn.dataset.prevText || "Send";
+      }
+    }
   });
+});
 
   /* ---------- footer year ---------- */
   const y = document.getElementById("y");
