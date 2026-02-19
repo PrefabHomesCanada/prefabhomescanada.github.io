@@ -704,7 +704,56 @@
       </div>
     </section>
 
-    <div class="wrap"><div class="sep"></div></div>
+    <!-- LEAD FORM (Formspree) -->
+<section class="section" id="get-quote">
+  <div class="wrap">
+    <div class="noteBox">
+      <h2 class="h2">Get a realistic prefab install plan (Canada)</h2>
+      <p class="sub">
+        Share your province + site basics. We’ll reply with a short checklist of what to ask local installers and what documentation to request before you pay.
+      </p>
+
+      <form class="form"
+            action="https://formspree.io/f/mdallnab"
+            method="POST">
+
+        <div class="grid">
+
+          <div class="card grid-span-6">
+            <label class="small"><strong>Province</strong></label>
+            <input class="input" name="province" placeholder="Ontario / Québec / BC / AB" required>
+          </div>
+
+          <div class="card grid-span-6">
+            <label class="small"><strong>Email</strong></label>
+            <input class="input" type="email" name="email" placeholder="you@example.com" required>
+          </div>
+
+          <div class="card grid-span-12">
+            <label class="small"><strong>Site notes</strong></label>
+            <textarea class="input" name="message" rows="4"
+              placeholder="Access, slope, utilities (well/septic?), year-round or seasonal…" required></textarea>
+          </div>
+
+        </div>
+
+        <input type="text" name="_gotcha" style="display:none">
+        <input type="hidden" name="_next" value="https://prefabhomescanada.github.io/thank-you/">
+
+        <p class="small muted" style="margin-top:10px;">
+          No spam. Planning reply only. See <a href="/privacy-policy/">Privacy policy</a>.
+        </p>
+
+        <p class="small" style="margin-top:12px;">
+          <button class="btn btn-primary" type="submit">Get My Planning Checklist</button>
+        </p>
+
+      </form>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="sep"></div></div>
 
     <!-- SUPPORTING GUIDES -->
     <section id="supporting-guides" class="section anchor">
