@@ -1,5 +1,5 @@
 /* =========================================================
-   PrefabHomesCanada — site.js (ULTRA PREMIUM)
+   PrefabHomesCanada — site.js (ULTRA PREMIUM) — UPDATED
    - No deps, fast, accessible
    - Mobile menu + outside click + ESC
    - Active nav link (scrollspy)
@@ -7,6 +7,7 @@
    - Header shrink on scroll (subtle)
    - Optional: GA4 click tracking if gtag() exists
    - Forms: UX + Formspree AJAX (redirect guaranteed)
+   - NEW: /thank-you/ conversion event (lead_success)
    ========================================================= */
 
 (() => {
@@ -22,6 +23,12 @@
 
   const safeCall = (fn, ...args) => { try { return fn(...args); } catch { return null; } };
 
+  const normPath = (p) => {
+    const path = (p || "/").trim();
+    // ensure trailing slash
+    return path.replace(/\/+$/, "") + "/";
+  };
+
   /* ---------- config ---------- */
   const CFG = {
     headerSel: ".site-header",
@@ -31,14 +38,15 @@
     navOpenClass: "open",
     headerCompactClass: "is-compact",
     headerCompactAt: 12, // px
-    scrollOffsetExtra: 12
+    scrollOffsetExtra: 12,
+    thankYouPath: "/thank-you/"
   };
 
   /* ---------- elements ---------- */
   const header = qs(CFG.headerSel);
   const nav = qs(CFG.navSel);
   const menuBtn = qs(`#${CFG.menuBtnId}`);
-  const navLinks = nav ? qsa("a[href^='#'], a[href^='/#']", nav) : [];
+  const navLinks = nav ? qsa("a[href]", nav) : [];
 
   /* ---------- GA4 helpers (optional) ---------- */
   function track(eventName, params = {}) {
@@ -48,6 +56,21 @@
       ...params
     });
   }
+  // optional alias (some pages call window.track)
+  window.track = window.track || track;
+
+  /* ---------- /thank-you/ conversion ping ---------- */
+  (function fireThankYouConversion() {
+    const p = normPath(window.location.pathname || "/");
+    if (p !== CFG.thankYouPath) return;
+
+    // avoid double-fire (e.g., bfcache restore)
+    const key = "phc_lead_success_fired";
+    if (sessionStorage.getItem(key) === "1") return;
+    sessionStorage.setItem(key, "1");
+
+    track("lead_success", { event_category: "lead", event_label: "thank-you" });
+  })();
 
   /* ---------- header height / offset ---------- */
   function headerOffset() {
@@ -56,6 +79,22 @@
   }
 
   /* ---------- mobile menu ---------- */
+  let scrollLocked = false;
+
+  function lockScroll(locked) {
+    if (locked && !scrollLocked) {
+      scrollLocked = true;
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+      return;
+    }
+    if (!locked && scrollLocked) {
+      scrollLocked = false;
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    }
+  }
+
   function setMenu(opened) {
     if (!nav || !menuBtn) return;
 
@@ -63,9 +102,7 @@
     menuBtn.setAttribute("aria-expanded", opened ? "true" : "false");
     menuBtn.setAttribute("aria-label", opened ? "Close menu" : "Open menu");
 
-    // Lock scroll when open (mobile)
-    document.documentElement.style.overflow = opened ? "hidden" : "";
-    document.body.style.overflow = opened ? "hidden" : "";
+    lockScroll(opened);
   }
 
   function toggleMenu() {
@@ -83,8 +120,7 @@
   // Close on outside click
   on(document, "click", (e) => {
     if (!nav || !menuBtn) return;
-    const opened = nav.classList.contains(CFG.navOpenClass);
-    if (!opened) return;
+    if (!nav.classList.contains(CFG.navOpenClass)) return;
 
     const target = e.target;
     const clickedInside = nav.contains(target) || menuBtn.contains(target);
@@ -98,17 +134,6 @@
     if (nav.classList.contains(CFG.navOpenClass)) setMenu(false);
   });
 
-  // Close menu after clicking a nav link (mobile)
-  navLinks.forEach((a) => {
-    on(a, "click", () => {
-      if (!nav) return;
-      if (nav.classList.contains(CFG.navOpenClass)) setMenu(false);
-
-      const label = (a.textContent || a.getAttribute("href") || "").trim().slice(0, 80);
-      track("nav_click", { event_category: "navigation", event_label: label });
-    });
-  });
-
   /* ---------- smooth anchor scroll with offset ---------- */
   function normalizeHashHref(href) {
     // supports "/#section" or "#section"
@@ -116,6 +141,21 @@
     const idx = href.indexOf("#");
     if (idx === -1) return "";
     return href.slice(idx);
+  }
+
+  function isSamePage(href) {
+    if (!href) return false;
+    if (href.startsWith("#")) return true;
+    if (href.startsWith("/#")) return true;
+
+    // Absolute or relative URL that points to current page + hash
+    try {
+      const u = new URL(href, window.location.origin);
+      const here = new URL(window.location.href);
+      return normPath(u.pathname) === normPath(here.pathname) && !!u.hash;
+    } catch {
+      return false;
+    }
   }
 
   function scrollToHash(hash) {
@@ -128,14 +168,25 @@
     else window.scrollTo({ top: y, behavior: "smooth" });
   }
 
-  // Intercept same-page anchor clicks
+  // Close menu + track on nav clicks (all links)
+  navLinks.forEach((a) => {
+    on(a, "click", () => {
+      if (nav && nav.classList.contains(CFG.navOpenClass)) setMenu(false);
+
+      const label = (a.textContent || a.getAttribute("href") || "").trim().slice(0, 80);
+      track("nav_click", { event_category: "navigation", event_label: label });
+    });
+  });
+
+  // Intercept same-page anchor clicks only
   navLinks.forEach((a) => {
     on(a, "click", (e) => {
-      const hash = normalizeHashHref(a.getAttribute("href"));
-      if (!hash) return;
+      const href = a.getAttribute("href") || "";
+      if (!isSamePage(href)) return;
 
-      // only intercept if element exists on this page
-      if (!qs(hash)) return;
+      const hash = normalizeHashHref(href);
+      if (!hash) return;
+      if (!qs(hash)) return; // only if element exists on this page
 
       e.preventDefault();
       history.pushState(null, "", hash);
@@ -152,10 +203,15 @@
   /* ---------- active link (scrollspy) ---------- */
   const sections = [];
   navLinks.forEach((a) => {
-    const hash = normalizeHashHref(a.getAttribute("href"));
+    const href = a.getAttribute("href") || "";
+    if (!isSamePage(href)) return;
+
+    const hash = normalizeHashHref(href);
     if (!hash) return;
+
     const el = qs(hash);
     if (!el) return;
+
     sections.push({ a, el, hash });
   });
 
@@ -211,7 +267,7 @@
 
   /* =========================================================
      FORMS: UX + Formspree AJAX (redirect guaranteed)
-     - Works when form has: data-formspree="true" or action is formspree.io/f/...
+     - Works when form has: data-formspree="true" OR action is formspree.io/f/...
      - Redirect target priority:
        1) form.dataset.next
        2) input[name="_next"]
@@ -249,7 +305,6 @@
   }
 
   function setFormError(form, msg) {
-    // Keep both: status box (nice) + fallback small line
     setStatus(form, "error", "Couldn’t send", msg);
 
     let line = qs(".formError", form);
@@ -262,22 +317,37 @@
     line.textContent = msg;
   }
 
+  function getSubmitButton(form) {
+    return qs("button[type='submit'], input[type='submit']", form);
+  }
+
+  function setBtnLoading(btn, loadingText) {
+    if (!btn) return () => {};
+    const isInput = btn.tagName === "INPUT";
+    const prev = isInput ? (btn.value || "") : (btn.textContent || "");
+    btn.dataset.prevText = prev;
+    btn.disabled = true;
+    if (isInput) btn.value = loadingText || "Sending…";
+    else btn.textContent = loadingText || "Sending…";
+
+    return () => {
+      btn.disabled = false;
+      const t = btn.dataset.prevText || (isInput ? "Send" : "Send");
+      if (isInput) btn.value = t;
+      else btn.textContent = t;
+    };
+  }
+
   forms.forEach((form) => {
     const action = (form.getAttribute("action") || "").trim();
+
     const isFormspree =
       form.dataset.formspree === "true" ||
       /https?:\/\/(www\.)?formspree\.io\/f\//i.test(action);
 
     on(form, "submit", async (e) => {
-      // Button UX
-      const btn = qs("button[type='submit'], input[type='submit']", form);
-      const prevText = btn ? (btn.textContent || btn.value || "") : "";
-
-      if (btn) {
-        btn.dataset.prevText = prevText;
-        btn.disabled = true;
-        if ("textContent" in btn) btn.textContent = btn.getAttribute("data-loading-text") || "Sending…";
-      }
+      const btn = getSubmitButton(form);
+      const restoreBtn = setBtnLoading(btn, btn?.getAttribute("data-loading-text") || "Sending…");
 
       clearStatus(form);
 
@@ -287,16 +357,26 @@
       });
 
       // Not Formspree? allow normal submit
-      if (!isFormspree) return;
+      if (!isFormspree) {
+        restoreBtn();
+        return;
+      }
+
+      // If action is missing/invalid, fail gracefully (don’t trap user)
+      if (!action || !/formspree\.io\/f\//i.test(action)) {
+        e.preventDefault();
+        restoreBtn();
+        setFormError(form, "Form endpoint is missing. Please refresh the page or try again later.");
+        return;
+      }
 
       // Formspree: prevent default and send via fetch
       e.preventDefault();
 
-      // Where to go after success
       const next =
         (form.dataset.next || "").trim() ||
         (qs("input[name='_next']", form)?.value || "").trim() ||
-        "/thank-you/";
+        CFG.thankYouPath;
 
       try {
         const fd = new FormData(form);
@@ -312,14 +392,13 @@
         });
 
         if (res.ok) {
-          // Optional: show a status for a split second (feels responsive)
           setStatus(form, "success", "Sent!", "Redirecting…");
-          // Redirect YOU control (never Formspree)
+          // optional: client-side conversion ping before redirect
+          track("lead_submit_success", { event_category: "lead", event_label: "formspree" });
           window.location.assign(next);
           return;
         }
 
-        // Error details from Formspree
         let msg = "Something went wrong. Please try again in a moment.";
         const data = await res.json().catch(() => null);
         if (data?.errors?.length) msg = data.errors.map((er) => er.message).join(" ");
@@ -328,11 +407,7 @@
       } catch {
         setFormError(form, "Network error. Please check your connection and try again.");
       } finally {
-        if (btn) {
-          btn.disabled = false;
-          const t = btn.dataset.prevText || "Send";
-          if ("textContent" in btn) btn.textContent = t;
-        }
+        restoreBtn();
       }
     });
   });
