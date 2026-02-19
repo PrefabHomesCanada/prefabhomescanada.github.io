@@ -533,6 +533,97 @@ textarea{ min-height: 120px; resize: vertical; }
   box-shadow: 0 0 0 4px rgba(26,116,255,.18);
 }
 
+/* ---------- 9.2) Form status (success / error) ---------- */
+.formStatus{
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.03);
+  color: rgba(238,242,255,.92);
+  box-shadow: var(--shadow2);
+}
+
+.formStatus strong{
+  display:block;
+  margin-bottom: 6px;
+  color: #fff;
+}
+
+.formStatus p{
+  margin:0;
+  color: rgba(238,242,255,.86);
+}
+
+/* Links inside status look clickable */
+.formStatus a{
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Loading (optional) */
+.formStatus.is-loading{
+  border-color: rgba(255,255,255,.16);
+  background:
+    radial-gradient(900px 520px at 12% 10%, rgba(255,255,255,.10), transparent 60%),
+    rgba(255,255,255,.03);
+}
+
+/* Success */
+.formStatus.is-success{
+  border-color: rgba(26,116,255,.28);
+  background:
+    radial-gradient(900px 520px at 12% 10%, rgba(26,116,255,.18), transparent 60%),
+    rgba(255,255,255,.03);
+}
+
+/* Error */
+.formStatus.is-error{
+  border-color: rgba(213,43,30,.32);
+  background:
+    radial-gradient(900px 520px at 12% 10%, rgba(213,43,30,.20), transparent 60%),
+    rgba(255,255,255,.03);
+}
+
+/* Small inline error text (optional) */
+.formError{
+  margin-top: 8px;
+  font-size: 14px;
+  color: rgba(255,255,255,.92);
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(213,43,30,.28);
+  background: rgba(213,43,30,.10);
+}
+
+/* ---------- 9.3) Button disabled/loading polish ---------- */
+.btn[disabled],
+button[disabled]{
+  opacity: .72;
+  cursor: not-allowed;
+  transform: none !important;
+  filter: none !important;
+}
+
+.btn[disabled]:active{
+  transform:none !important;
+}
+
+/* Disabled buttons should not brighten on hover */
+.btn[disabled]:hover{
+  filter:none !important;
+}
+
+/* ---------- 9.4) Honeypot / hidden input safety ---------- */
+input[name="_gotcha"]{
+  position:absolute !important;
+  left:-9999px !important;
+  width:1px !important;
+  height:1px !important;
+  opacity:0 !important;
+  pointer-events:none !important;
+}
+
 /* ---------- 10) Footer ---------- */
 .site-footer{
   border-top:1px solid var(--line);
