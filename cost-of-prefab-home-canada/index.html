@@ -716,7 +716,9 @@
       <form class="form"
             action="https://formspree.io/f/mdallnab"
             method="POST"
-            accept-charset="UTF-8">
+            accept-charset="UTF-8"
+            data-formspree="true"
+            data-next="/thank-you/">
 
         <!-- Optional: helps your inbox triage -->
         <input type="hidden" name="_subject" value="PrefabHomesCanada: New install-planning request">
@@ -729,6 +731,7 @@
                    id="province"
                    name="province"
                    placeholder="Ontario / Québec / BC / AB"
+                   autocomplete="address-level1"
                    required>
           </div>
 
@@ -738,11 +741,10 @@
                    id="email"
                    type="email"
                    name="email"
+                   inputmode="email"
                    autocomplete="email"
                    placeholder="you@example.com"
                    required>
-            <!-- Formspree convenience field (reply-to) -->
-            <input type="hidden" name="_replyto" value="">
           </div>
 
           <div class="card grid-span-12">
@@ -758,9 +760,9 @@
         </div>
 
         <!-- Honeypot -->
-        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none">
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
 
-        <!-- Your redirect -->
+        <!-- Backup redirect (JS already forces /thank-you/) -->
         <input type="hidden" name="_next" value="https://prefabhomescanada.github.io/thank-you/">
 
         <p class="small muted" style="margin-top:10px;">
@@ -768,7 +770,9 @@
         </p>
 
         <p class="small" style="margin-top:12px;">
-          <button class="btn btn-primary" type="submit">Get My Planning Checklist</button>
+          <button class="btn btn-primary" type="submit" data-loading-text="Sending…">
+            Get My Planning Checklist
+          </button>
         </p>
 
       </form>
