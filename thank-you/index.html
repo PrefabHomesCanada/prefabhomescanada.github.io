@@ -16,6 +16,9 @@
   <meta name="theme-color" content="#0b1020">
   <meta name="author" content="PrefabHomesCanada Editorial">
 
+  <!-- Perf: preconnect (optional) -->
+  <link rel="preconnect" href="https://formspree.io" crossorigin>
+
   <!-- Favicons (root) -->
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -26,7 +29,7 @@
   <!-- Shared CSS -->
   <link rel="stylesheet" href="/assets/css/styles.css">
 
-  <!-- Small page-only layout safety -->
+  <!-- Small page-only layout safety (OK to move into styles.css later) -->
   <style>
     .thanks-wrap{max-width:980px;margin:0 auto;}
     .thanks-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
@@ -46,7 +49,8 @@
           alt="PrefabHomesCanada"
           width="1000"
           height="250"
-          loading="lazy"
+          loading="eager"
+          fetchpriority="low"
           decoding="async">
       </a>
 
@@ -89,6 +93,7 @@
 
           <div class="thanks-actions" aria-label="Next actions">
             <a class="btn btn-primary" href="/cost-of-prefab-home-canada/">Back to the cost guide</a>
+            <a class="btn btn-ghost" href="/cost-of-prefab-home-canada/#get-quote">Submit another request</a>
             <a class="btn btn-ghost" href="/best-prefab-homes-canada/">See the Top 7</a>
             <a class="btn btn-ghost" href="/permits-by-province/">Permits by province</a>
           </div>
@@ -156,6 +161,25 @@
       <a class="footerTop small" href="#top" aria-label="Back to top">Back to top ↑</a>
     </div>
   </footer>
+
+  <!-- Optional: fire a conversion event on thank-you (safe if GA isn't present) -->
+  <script>
+    (function () {
+      var path = (location.pathname || "").replace(/\/+$/, "") + "/";
+      if (path !== "/thank-you/") return;
+
+      if (typeof window.gtag === "function") {
+        window.gtag("event", "lead_success", {
+          event_category: "lead",
+          event_label: "thank-you"
+        });
+      }
+
+      if (typeof window.track === "function") {
+        window.track("lead_success", { event_category: "lead", event_label: "thank-you" });
+      }
+    })();
+  </script>
 
   <script src="/assets/js/site.js" defer></script>
 </body>
