@@ -212,7 +212,8 @@
           alt="PrefabHomesCanada"
           width="1000"
           height="250"
-          loading="lazy"
+          loading="eager"
+          fetchpriority="low"
           decoding="async">
       </a>
 
@@ -764,6 +765,9 @@
 
         <!-- Backup redirect (JS already forces /thank-you/) -->
         <input type="hidden" name="_next" value="https://prefabhomescanada.github.io/thank-you/">
+
+        <!-- Inline status (JS will show success/error here) -->
+        <div class="formStatus" id="formStatus" aria-live="polite" hidden></div>
 
         <p class="small muted" style="margin-top:10px;">
           No spam. Planning reply only. See <a href="/privacy-policy/">Privacy policy</a>.
