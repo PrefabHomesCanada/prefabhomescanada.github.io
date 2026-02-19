@@ -715,29 +715,52 @@
 
       <form class="form"
             action="https://formspree.io/f/mdallnab"
-            method="POST">
+            method="POST"
+            accept-charset="UTF-8">
+
+        <!-- Optional: helps your inbox triage -->
+        <input type="hidden" name="_subject" value="PrefabHomesCanada: New install-planning request">
 
         <div class="grid">
 
           <div class="card grid-span-6">
-            <label class="small"><strong>Province</strong></label>
-            <input class="input" name="province" placeholder="Ontario / Québec / BC / AB" required>
+            <label class="small" for="province"><strong>Province</strong></label>
+            <input class="input"
+                   id="province"
+                   name="province"
+                   placeholder="Ontario / Québec / BC / AB"
+                   required>
           </div>
 
           <div class="card grid-span-6">
-            <label class="small"><strong>Email</strong></label>
-            <input class="input" type="email" name="email" placeholder="you@example.com" required>
+            <label class="small" for="email"><strong>Email</strong></label>
+            <input class="input"
+                   id="email"
+                   type="email"
+                   name="email"
+                   autocomplete="email"
+                   placeholder="you@example.com"
+                   required>
+            <!-- Formspree convenience field (reply-to) -->
+            <input type="hidden" name="_replyto" value="">
           </div>
 
           <div class="card grid-span-12">
-            <label class="small"><strong>Site notes</strong></label>
-            <textarea class="input" name="message" rows="4"
-              placeholder="Access, slope, utilities (well/septic?), year-round or seasonal…" required></textarea>
+            <label class="small" for="message"><strong>Site notes</strong></label>
+            <textarea class="input"
+                      id="message"
+                      name="message"
+                      rows="4"
+                      placeholder="Access, slope, utilities (well/septic?), year-round or seasonal…"
+                      required></textarea>
           </div>
 
         </div>
 
-        <input type="text" name="_gotcha" style="display:none">
+        <!-- Honeypot -->
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none">
+
+        <!-- Your redirect -->
         <input type="hidden" name="_next" value="https://prefabhomescanada.github.io/thank-you/">
 
         <p class="small muted" style="margin-top:10px;">
