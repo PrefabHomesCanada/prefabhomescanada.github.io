@@ -6,6 +6,7 @@
    - Smooth anchor scroll with header offset
    - Header shrink on scroll (subtle)
    - Optional: GA4 click tracking if gtag() exists
+   - Forms: UX + Formspree AJAX (redirect guaranteed)
    ========================================================= */
 
 (() => {
@@ -16,7 +17,6 @@
   const qsa = (sel, root = document) => Array.from(root.querySelectorAll(sel));
   const on  = (el, ev, fn, opts) => el && el.addEventListener(ev, fn, opts);
 
-  const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
   const prefersReduced = () =>
     window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -209,108 +209,136 @@
     revealEls.forEach((el) => io.observe(el));
   }
 
-  /* ---------- forms: UX + Formspree AJAX (redirect guaranteed) ---------- */
-const forms = qsa("form");
+  /* =========================================================
+     FORMS: UX + Formspree AJAX (redirect guaranteed)
+     - Works when form has: data-formspree="true" or action is formspree.io/f/...
+     - Redirect target priority:
+       1) form.dataset.next
+       2) input[name="_next"]
+       3) "/thank-you/"
+     ========================================================= */
 
-function setFormError(form, msg) {
-  let box = qs(".formError", form);
-  if (!box) {
-    box = document.createElement("p");
-    box.className = "small formError";
-    box.style.marginTop = "10px";
-    box.style.padding = "10px 12px";
-    box.style.borderRadius = "12px";
-    box.style.border = "1px solid rgba(255,255,255,.18)";
-    box.style.background = "rgba(255,255,255,.06)";
-    box.style.color = "inherit";
-    form.appendChild(box);
-  }
-  box.textContent = msg;
-}
+  const forms = qsa("form");
 
-forms.forEach((form) => {
-  const action = (form.getAttribute("action") || "").trim();
-  const isFormspree =
-    form.dataset.formspree === "true" ||
-    /https?:\/\/(www\.)?formspree\.io\/f\//i.test(action);
-
-  on(form, "submit", async (e) => {
-    // Always keep your nice button UX
-    const btn = qs("button[type='submit'], input[type='submit']", form);
-    const prevText = btn ? (btn.textContent || "") : "";
-
-    if (btn) {
-      btn.dataset.prevText = prevText;
-      btn.disabled = true;
-      btn.textContent = btn.getAttribute("data-loading-text") || "Sending…";
+  function ensureStatusBox(form) {
+    let box = qs("#formStatus", form) || qs(".formStatus", form);
+    if (!box) {
+      box = document.createElement("div");
+      box.className = "formStatus";
+      box.id = "formStatus";
+      box.setAttribute("aria-live", "polite");
+      box.hidden = true;
+      form.appendChild(box);
     }
+    return box;
+  }
 
-    track("form_submit", {
-      event_category: "lead",
-      event_label: form.getAttribute("id") || "form"
-    });
+  function setStatus(form, type, title, message) {
+    const box = ensureStatusBox(form);
+    box.className = `formStatus ${type ? `is-${type}` : ""}`.trim();
+    box.hidden = false;
+    box.innerHTML = `<strong>${title}</strong><p>${message}</p>`;
+  }
 
-    // If it's NOT Formspree, let it submit normally
-    if (!isFormspree) return;
+  function clearStatus(form) {
+    const box = qs("#formStatus", form) || qs(".formStatus", form);
+    if (!box) return;
+    box.hidden = true;
+    box.textContent = "";
+    box.className = "formStatus";
+  }
 
-    // Formspree: prevent default and send via fetch (so we control redirect)
-    e.preventDefault();
+  function setFormError(form, msg) {
+    // Keep both: status box (nice) + fallback small line
+    setStatus(form, "error", "Couldn’t send", msg);
 
-    // Where to go after success
-    const next =
-      (form.dataset.next || "").trim() ||
-      (qs("input[name='_next']", form)?.value || "").trim() ||
-      "/thank-you/";
+    let line = qs(".formError", form);
+    if (!line) {
+      line = document.createElement("p");
+      line.className = "small formError";
+      line.style.marginTop = "10px";
+      form.appendChild(line);
+    }
+    line.textContent = msg;
+  }
 
-    try {
-      const fd = new FormData(form);
+  forms.forEach((form) => {
+    const action = (form.getAttribute("action") || "").trim();
+    const isFormspree =
+      form.dataset.formspree === "true" ||
+      /https?:\/\/(www\.)?formspree\.io\/f\//i.test(action);
 
-      // Optional: make reply-to work nicely
-      const email = (fd.get("email") || "").toString().trim();
-      if (email && !fd.get("_replyto")) fd.append("_replyto", email);
+    on(form, "submit", async (e) => {
+      // Button UX
+      const btn = qs("button[type='submit'], input[type='submit']", form);
+      const prevText = btn ? (btn.textContent || btn.value || "") : "";
 
-      // Submit to Formspree
-      const res = await fetch(action, {
-        method: "POST",
-        body: fd,
-        headers: { "Accept": "application/json" }
+      if (btn) {
+        btn.dataset.prevText = prevText;
+        btn.disabled = true;
+        if ("textContent" in btn) btn.textContent = btn.getAttribute("data-loading-text") || "Sending…";
+      }
+
+      clearStatus(form);
+
+      track("form_submit", {
+        event_category: "lead",
+        event_label: form.getAttribute("id") || form.getAttribute("name") || "form"
       });
 
-      if (res.ok) {
-        // Success: YOU redirect (never Formspree)
-        window.location.assign(next);
-        return;
-      }
+      // Not Formspree? allow normal submit
+      if (!isFormspree) return;
 
-      // Error handling
-      let msg = "Something went wrong. Please try again in a moment.";
-      const data = await res.json().catch(() => null);
-      if (data?.errors?.length) msg = data.errors.map(e => e.message).join(" ");
-      setFormError(form, msg);
+      // Formspree: prevent default and send via fetch
+      e.preventDefault();
 
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent = btn.dataset.prevText || "Send";
-      }
-    } catch (err) {
-      setFormError(form, "Network error. Please check your connection and try again.");
+      // Where to go after success
+      const next =
+        (form.dataset.next || "").trim() ||
+        (qs("input[name='_next']", form)?.value || "").trim() ||
+        "/thank-you/";
 
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent = btn.dataset.prevText || "Send";
+      try {
+        const fd = new FormData(form);
+
+        // Reply-to support (Formspree convenience)
+        const email = (fd.get("email") || "").toString().trim();
+        if (email && !fd.get("_replyto")) fd.append("_replyto", email);
+
+        const res = await fetch(action, {
+          method: "POST",
+          body: fd,
+          headers: { "Accept": "application/json" }
+        });
+
+        if (res.ok) {
+          // Optional: show a status for a split second (feels responsive)
+          setStatus(form, "success", "Sent!", "Redirecting…");
+          // Redirect YOU control (never Formspree)
+          window.location.assign(next);
+          return;
+        }
+
+        // Error details from Formspree
+        let msg = "Something went wrong. Please try again in a moment.";
+        const data = await res.json().catch(() => null);
+        if (data?.errors?.length) msg = data.errors.map((er) => er.message).join(" ");
+        setFormError(form, msg);
+
+      } catch {
+        setFormError(form, "Network error. Please check your connection and try again.");
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          const t = btn.dataset.prevText || "Send";
+          if ("textContent" in btn) btn.textContent = t;
+        }
       }
-    }
+    });
   });
-});
 
   /* ---------- footer year ---------- */
   const y = document.getElementById("y");
   if (y) y.textContent = String(new Date().getFullYear());
 
-})();
-
-// Footer year
-(() => {
-  const y = document.getElementById("y");
-  if (y) y.textContent = String(new Date().getFullYear());
 })();
